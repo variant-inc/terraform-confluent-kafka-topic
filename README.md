@@ -1,1 +1,1 @@
-# terraform-confluent-kafka-topic
+# Terraform Confluent Kafka Topic
