@@ -27,7 +27,7 @@ KAFKA_REST_ENDPOINT
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 3.0 |
-| <a name="provider_confluent"></a> [confluent](#provider\_confluent) | 1.0.0 |
+| <a name="provider_confluent"></a> [confluent](#provider\_confluent) | ~> 1.0 |
 
 ## Modules
 
