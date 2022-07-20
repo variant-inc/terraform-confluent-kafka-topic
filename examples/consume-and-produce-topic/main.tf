@@ -27,7 +27,7 @@ module "topics" {
   service_account_name = "some-name"
 
   topics = {
-    produce = [
+    managed = [
       {
         name             = "test"
         partitions_count = 2
@@ -40,18 +40,18 @@ module "topics" {
         config = {
           "max.message.bytes" = "12345"
         }
-      },
-      {
-        name         = "dev.Event.Trailers"
-        create_topic = false
       }
     ]
-    consume = [
+    existing = [
       {
-        name = "dev.test"
+        full_name = "dev.test"
       },
       {
-        name = "dev.test1"
+        full_name = "dev.test1"
+      },
+      {
+        full_name    = "dev.Event.Trailers"
+        write_access = false
       }
     ]
   }

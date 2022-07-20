@@ -15,11 +15,14 @@ KAFKA_REST_ENDPOINT
 
 ## Topic Names
 
-1. By default, `create_topic = true` for all topics under produce.
-2. If topic is created in this repo using `create_topic = true`,
-   then a prefix is added.
-3. If topic is not created as part of this repo,
-   then prefix is not added and the full name has to be provided
+1. For existing, full name has to be provided.
+2. For managed, a prefix is added to non-prod environments.
+
+## Topic Permissions
+
+1. `managed` topics has access to write.
+2. `existing` topics has access to read by default.
+3. To get write/produce access to existing topic, set `write_access=true`
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -49,7 +52,8 @@ No modules.
 | [confluent_api_key.app](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/api_key) | resource |
 | [confluent_kafka_acl.app_consumer_read_on_group](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/kafka_acl) | resource |
 | [confluent_kafka_acl.app_consumer_read_on_topic](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/kafka_acl) | resource |
-| [confluent_kafka_acl.app_producer_write_on_topic](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/kafka_acl) | resource |
+| [confluent_kafka_acl.app_producer_write_on_existing_topic](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/kafka_acl) | resource |
+| [confluent_kafka_acl.app_producer_write_on_managed_topic](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/kafka_acl) | resource |
 | [confluent_kafka_topic.topics](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/kafka_topic) | resource |
 | [confluent_service_account.app](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/service_account) | resource |
 | [confluent_environment.environment](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/data-sources/environment) | data source |
@@ -65,7 +69,7 @@ No modules.
 | <a name="input_service_account_name"></a> [service\_account\_name](#input\_service\_account\_name) | Name of the service account | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags | `map(string)` | n/a | yes |
 | <a name="input_topic_prefix"></a> [topic\_prefix](#input\_topic\_prefix) | Prefix of the Topic.<br>  It is the first 3 characters of the environment.<br><br>  For non-prod, it is empty | `string` | `""` | no |
-| <a name="input_topics"></a> [topics](#input\_topics) | List of Topics<br><br>1. By default, `create_topic = true` for all topics under produce.<br>2. If topic is created in this repo using `create_topic = true`,<br>   then a prefix is added.<br>3. If topic is not created as part of this repo,<br>   then prefix is not added and the full name has to be provided | <pre>object({<br>    produce = optional(list(object({<br>      name             = string<br>      partitions_count = optional(number)<br>      config           = optional(map(string))<br>      create_topic     = optional(bool)<br>    })))<br>    consume = optional(list(object({<br>      name = string<br>    })))<br>  })</pre> | n/a | yes |
+| <a name="input_topics"></a> [topics](#input\_topics) | List of Topics<br><br>1. For existing, full name has to be provided.<br>2. For managed, a prefix is added to non-prod environments.<br>3. To get write/produce access to existing topic, set `write_access=true` | <pre>object({<br>    managed = optional(list(object({<br>      name             = string<br>      partitions_count = optional(number)<br>      config           = optional(map(string))<br>    })))<br>    existing = optional(list(object({<br>      full_name    = string<br>      write_access = optional(bool)<br>    })))<br>  })</pre> | n/a | yes |
 
 ## Outputs
 

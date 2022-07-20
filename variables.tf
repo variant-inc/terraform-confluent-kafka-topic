@@ -25,21 +25,19 @@ variable "topics" {
   description = <<EOT
 List of Topics
 
-1. By default, `create_topic = true` for all topics under produce.
-2. If topic is created in this repo using `create_topic = true`,
-   then a prefix is added.
-3. If topic is not created as part of this repo,
-   then prefix is not added and the full name has to be provided
+1. For existing, full name has to be provided.
+2. For managed, a prefix is added to non-prod environments.
+3. To get write/produce access to existing topic, set `write_access=true`
 EOT
   type = object({
-    produce = optional(list(object({
+    managed = optional(list(object({
       name             = string
       partitions_count = optional(number)
       config           = optional(map(string))
-      create_topic     = optional(bool)
     })))
-    consume = optional(list(object({
-      name = string
+    existing = optional(list(object({
+      full_name    = string
+      write_access = optional(bool)
     })))
   })
 }

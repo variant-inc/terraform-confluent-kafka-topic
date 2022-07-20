@@ -1,12 +1,12 @@
 output "write_topics" {
-  value = [for t in local.topics.produce : t.create_topic ? (
-    "${var.topic_prefix}.${t.name}"
-  ) : t.name]
+  value = distinct(concat([for t in local.topics.existing : t.full_name if t.write_access],
+    values(confluent_kafka_topic.topics).*.topic_name
+  ))
   description = "Topics with Write Access"
 }
 
 output "read_topics" {
-  value       = [for t in local.topics.consume : t.name]
+  value       = [for t in local.topics.existing : t.full_name if !t.write_access]
   description = "Topics with Read Access"
 }
 

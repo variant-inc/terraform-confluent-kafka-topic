@@ -27,12 +27,12 @@ module "topics" {
   service_account_name = "some-name"
 
   topics = {
-    consume = [
+    existing = [
       {
-        name = "dev.Event.Trailers"
+        full_name = "dev.Event.Trailers"
       },
       {
-        name = "dev.DataChange.Trailers"
+        full_name = "dev.DataChange.Trailers"
       }
     ]
   }
