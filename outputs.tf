@@ -1,10 +1,12 @@
 output "write_topics" {
-  value       = values(confluent_kafka_topic.topics).*.topic_name
+  value = [for t in local.topics.produce : t.create_topic ? (
+    "${var.topic_prefix}.${t.name}"
+  ) : t.name]
   description = "Topics with Write Access"
 }
 
 output "read_topics" {
-  value       = values(data.confluent_kafka_topic.conume_topics).*.topic_name
+  value       = [for t in local.topics.consume : t.name]
   description = "Topics with Read Access"
 }
 

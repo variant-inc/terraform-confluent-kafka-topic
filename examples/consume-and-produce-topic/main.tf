@@ -40,14 +40,18 @@ module "topics" {
         config = {
           "max.message.bytes" = "12345"
         }
+      },
+      {
+        name         = "dev.Event.Trailers"
+        create_topic = false
       }
     ]
     consume = [
       {
-        name = "dev-test"
+        name = "dev.test"
       },
       {
-        name = "dev-test1"
+        name = "dev.test1"
       }
     ]
   }

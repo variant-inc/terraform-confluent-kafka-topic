@@ -13,6 +13,14 @@ KAFKA_API_SECRET
 KAFKA_REST_ENDPOINT
 ```
 
+## Topic Names
+
+1. By default, `create_topic = true` for all topics under produce.
+2. If topic is created in this repo using `create_topic = true`,
+   then a prefix is added.
+3. If topic is not created as part of this repo,
+   then prefix is not added and the full name has to be provided
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
@@ -46,7 +54,7 @@ No modules.
 | [confluent_service_account.app](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/service_account) | resource |
 | [confluent_environment.environment](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/data-sources/environment) | data source |
 | [confluent_kafka_cluster.cluster](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/data-sources/kafka_cluster) | data source |
-| [confluent_kafka_topic.conume_topics](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/data-sources/kafka_topic) | data source |
+| [confluent_kafka_topic.topics](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/data-sources/kafka_topic) | data source |
 
 ## Inputs
 
@@ -57,7 +65,7 @@ No modules.
 | <a name="input_service_account_name"></a> [service\_account\_name](#input\_service\_account\_name) | Name of the service account | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags | `map(string)` | n/a | yes |
 | <a name="input_topic_prefix"></a> [topic\_prefix](#input\_topic\_prefix) | Prefix of the Topic.<br>  It is the first 3 characters of the environment.<br><br>  For non-prod, it is empty | `string` | `""` | no |
-| <a name="input_topics"></a> [topics](#input\_topics) | List of Topics | <pre>object({<br>    produce = optional(list(object({<br>      name             = string<br>      partitions_count = optional(number)<br>      config           = optional(map(string))<br>    })))<br>    consume = optional(list(object({<br>      name = string<br>    })))<br>  })</pre> | n/a | yes |
+| <a name="input_topics"></a> [topics](#input\_topics) | List of Topics<br><br>1. By default, `create_topic = true` for all topics under produce.<br>2. If topic is created in this repo using `create_topic = true`,<br>   then a prefix is added.<br>3. If topic is not created as part of this repo,<br>   then prefix is not added and the full name has to be provided | <pre>object({<br>    produce = optional(list(object({<br>      name             = string<br>      partitions_count = optional(number)<br>      config           = optional(map(string))<br>      create_topic     = optional(bool)<br>    })))<br>    consume = optional(list(object({<br>      name = string<br>    })))<br>  })</pre> | n/a | yes |
 
 ## Outputs
 

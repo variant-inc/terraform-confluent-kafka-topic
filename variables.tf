@@ -22,12 +22,21 @@ variable "cluster_name" {
 }
 
 variable "topics" {
-  description = "List of Topics"
+  description = <<EOT
+List of Topics
+
+1. By default, `create_topic = true` for all topics under produce.
+2. If topic is created in this repo using `create_topic = true`,
+   then a prefix is added.
+3. If topic is not created as part of this repo,
+   then prefix is not added and the full name has to be provided
+EOT
   type = object({
     produce = optional(list(object({
       name             = string
       partitions_count = optional(number)
       config           = optional(map(string))
+      create_topic     = optional(bool)
     })))
     consume = optional(list(object({
       name = string
