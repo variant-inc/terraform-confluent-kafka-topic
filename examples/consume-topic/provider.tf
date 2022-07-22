@@ -1,0 +1,3 @@
+provider "confluent" {}
+
+provider "aws" {}
