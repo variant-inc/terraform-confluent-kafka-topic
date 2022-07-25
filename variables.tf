@@ -4,15 +4,13 @@ variable "environment" {
 }
 
 
-variable "topic_prefix" {
+variable "confluent_prefix" {
   description = <<EOF
-  Prefix of the Topic.
-  It is the first 3 characters of the environment.
+  Prefix of the Resources
 
   For non-prod, it is empty
   EOF
   type        = string
-  default     = ""
 }
 
 

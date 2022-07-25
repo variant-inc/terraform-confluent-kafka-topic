@@ -65,10 +65,10 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Confluent Kafka Cluster Name | `string` | n/a | yes |
+| <a name="input_confluent_prefix"></a> [confluent\_prefix](#input\_confluent\_prefix) | Prefix of the Resources<br><br>  For non-prod, it is empty | `string` | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment where the cluster is located | `string` | n/a | yes |
 | <a name="input_service_account_name"></a> [service\_account\_name](#input\_service\_account\_name) | Name of the service account | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags | `map(string)` | n/a | yes |
-| <a name="input_topic_prefix"></a> [topic\_prefix](#input\_topic\_prefix) | Prefix of the Topic.<br>  It is the first 3 characters of the environment.<br><br>  For non-prod, it is empty | `string` | `""` | no |
 | <a name="input_topics"></a> [topics](#input\_topics) | List of Topics<br><br>1. For existing, full name has to be provided.<br>2. For managed, a prefix is added to non-prod environments.<br>3. To get write/produce access to existing topic, set `write_access=true` | <pre>object({<br>    managed = optional(list(object({<br>      name             = string<br>      partitions_count = optional(number)<br>      config           = optional(map(string))<br>    })))<br>    existing = optional(list(object({<br>      full_name    = string<br>      write_access = optional(bool)<br>    })))<br>  })</pre> | n/a | yes |
 
 ## Outputs
