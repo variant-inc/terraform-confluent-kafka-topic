@@ -12,14 +12,16 @@ data "confluent_kafka_cluster" "cluster" {
 locals {
   topics = defaults(var.topics, {
     managed = {
-      partitions_count = var.topic_prefix != "" ? 2 : 6
+      partitions_count = var.confluent_prefix != "" ? 2 : 6
     }
     existing = {
       write_access = false
     }
   })
 
-  service_account_name = "${var.topic_prefix}.${var.service_account_name}"
+  prefix = var.confluent_prefix == "" ? "" : "${var.confluent_prefix}."
+
+  service_account_name = "${local.prefix}${var.service_account_name}"
   consumer_group       = "confluent_cli_consumer_${confluent_service_account.app.id}"
 
   description = join(" ", [for k in keys(var.tags) :
@@ -33,7 +35,7 @@ resource "confluent_kafka_topic" "topics" {
     t.name => t
   }
 
-  topic_name       = "${var.topic_prefix}.${each.value.name}"
+  topic_name       = "${local.prefix}${each.value.name}"
   rest_endpoint    = data.confluent_kafka_cluster.cluster.rest_endpoint
   config           = each.value.config
   partitions_count = each.value.partitions_count
