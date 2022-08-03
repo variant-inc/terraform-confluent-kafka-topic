@@ -1,3 +1,13 @@
+output "managed_topics" {
+  value = confluent_kafka_topic.topic
+  description = "Managed topics output. Keyed by name and full name"
+}
+
+output "existing_topics" {
+  value = local.existing
+  description = "Existing topics output"
+}
+
 output "write_topics" {
   value = distinct(concat([for t in local.topics.existing : t.full_name if t.write_access],
     values(confluent_kafka_topic.topics).*.topic_name
