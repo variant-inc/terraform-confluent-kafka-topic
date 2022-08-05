@@ -4,7 +4,7 @@ output "managed_topics" {
 }
 
 output "existing_topics" {
-  value = local.existing
+  value = local.topics.existing
   description = "Existing topics output"
 }
 
