@@ -79,6 +79,8 @@ No modules.
 | <a name="output_api_key_secret"></a> [api\_key\_secret](#output\_api\_key\_secret) | API Key secret |
 | <a name="output_bootstrap_server"></a> [bootstrap\_server](#output\_bootstrap\_server) | Kafka Cluster Bootstrap Server |
 | <a name="output_consumer_group"></a> [consumer\_group](#output\_consumer\_group) | Name of the consumer group |
+| <a name="output_existing_topics"></a> [existing\_topics](#output\_existing\_topics) | Existing topics output. Keyed by full\_name |
+| <a name="output_managed_topics"></a> [managed\_topics](#output\_managed\_topics) | Managed topics. Keyed by name. |
 | <a name="output_read_topics"></a> [read\_topics](#output\_read\_topics) | Topics with Read Access |
 | <a name="output_rest_endpoint"></a> [rest\_endpoint](#output\_rest\_endpoint) | Kafka Cluster Rest Endpoint |
 | <a name="output_service_account_name"></a> [service\_account\_name](#output\_service\_account\_name) | Name of the service account |
