@@ -1,10 +1,11 @@
 output "managed_topics" {
-  value = confluent_kafka_topic.topic
-  description = "All topics keyed by name and full name"
+  value       = confluent_kafka_topic.topic
+  description = "Managed topics. Keyed by name."
 }
 
 output "existing_topics" {
-  value = local.existing
+  value       = local.topics.existing
+  description = "Existing topics output. Keyed by full_name"
 }
 
 output "write_topics" {
