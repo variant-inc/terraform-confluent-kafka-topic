@@ -1,5 +1,5 @@
 output "managed_topics" {
-  value       = confluent_kafka_topic.topic
+  value       = confluent_kafka_topic.topics
   description = "Managed topics. Keyed by name."
 }
 
