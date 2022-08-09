@@ -58,7 +58,6 @@ No modules.
 | [confluent_service_account.app](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/resources/service_account) | resource |
 | [confluent_environment.environment](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/data-sources/environment) | data source |
 | [confluent_kafka_cluster.cluster](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/data-sources/kafka_cluster) | data source |
-| [confluent_kafka_topic.topics](https://registry.terraform.io/providers/confluentinc/confluent/latest/docs/data-sources/kafka_topic) | data source |
 
 ## Inputs
 

@@ -45,24 +45,6 @@ resource "confluent_kafka_topic" "topics" {
   }
 }
 
-data "confluent_kafka_topic" "topics" {
-  for_each = {
-    for t in local.topics.existing :
-    t.full_name => t
-  }
-
-  rest_endpoint = data.confluent_kafka_cluster.cluster.rest_endpoint
-  topic_name    = each.key
-
-  kafka_cluster {
-    id = data.confluent_kafka_cluster.cluster.id
-  }
-
-  depends_on = [
-    confluent_kafka_topic.topics
-  ]
-}
-
 resource "aws_ssm_parameter" "topics" {
   for_each = {
     for t in local.topics.managed :
@@ -124,7 +106,7 @@ resource "confluent_kafka_acl" "app_producer_write_on_existing_topic" {
   }
 
   resource_type = "TOPIC"
-  resource_name = data.confluent_kafka_topic.topics[each.key].topic_name
+  resource_name = each.key
   pattern_type  = "LITERAL"
   principal     = "User:${confluent_service_account.app.id}"
   host          = "*"
@@ -144,7 +126,7 @@ resource "confluent_kafka_acl" "app_consumer_read_on_topic" {
   }
 
   resource_type = "TOPIC"
-  resource_name = data.confluent_kafka_topic.topics[each.key].topic_name
+  resource_name = each.key
   pattern_type  = "LITERAL"
   principal     = "User:${confluent_service_account.app.id}"
   host          = "*"
