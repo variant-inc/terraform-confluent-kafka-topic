@@ -16,6 +16,7 @@ locals {
     }
     existing = {
       write_access = false
+      pattern_type = "LITERAL"
     }
   })
 
@@ -107,7 +108,7 @@ resource "confluent_kafka_acl" "app_producer_write_on_existing_topic" {
 
   resource_type = "TOPIC"
   resource_name = each.key
-  pattern_type  = "LITERAL"
+  pattern_type  = each.value.pattern_type
   principal     = "User:${confluent_service_account.app.id}"
   host          = "*"
   operation     = "WRITE"
@@ -127,7 +128,7 @@ resource "confluent_kafka_acl" "app_consumer_read_on_topic" {
 
   resource_type = "TOPIC"
   resource_name = each.key
-  pattern_type  = "LITERAL"
+  pattern_type  = each.value.pattern_type
   principal     = "User:${confluent_service_account.app.id}"
   host          = "*"
   operation     = "READ"
