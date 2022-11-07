@@ -11,6 +11,7 @@ data "confluent_kafka_cluster" "cluster" {
 
 locals {
   prefix = var.confluent_prefix == "" ? "" : "${var.confluent_prefix}."
+  partitions_count = local.prefix != "" ? 2 : 6
 
   service_account_name = "${local.prefix}${var.service_account_name}"
   consumer_group       = "confluent_cli_consumer_${confluent_service_account.app.id}"
@@ -29,7 +30,7 @@ resource "confluent_kafka_topic" "topics" {
   topic_name       = "${local.prefix}${each.value.name}"
   rest_endpoint    = data.confluent_kafka_cluster.cluster.rest_endpoint
   config           = each.value.config
-  partitions_count = each.value.partitions_count
+  partitions_count = each.value.partitions_count != null && each.value.partitions_count != local.partitions_count ? each.value.partitions_count : local.partitions_count
 
   kafka_cluster {
     id = data.confluent_kafka_cluster.cluster.id

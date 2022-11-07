@@ -30,7 +30,7 @@ EOT
   type = object({
     managed = optional(list(object({
       name             = string
-      partitions_count = optional(number, var.confluent_prefix != "" ? 2 : 6)
+      partitions_count = optional(number)
       config           = optional(map(string))
     })))
     existing = optional(list(object({
