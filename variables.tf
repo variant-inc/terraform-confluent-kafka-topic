@@ -30,13 +30,13 @@ EOT
   type = object({
     managed = optional(list(object({
       name             = string
-      partitions_count = optional(number)
+      partitions_count = optional(number, var.confluent_prefix != "" ? 2 : 6)
       config           = optional(map(string))
     })))
     existing = optional(list(object({
       full_name    = string
-      pattern_type = optional(string)
-      write_access = optional(bool)
+      pattern_type = optional(string, "LITERAL")
+      write_access = optional(bool, false)
     })))
   })
 }

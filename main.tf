@@ -10,16 +10,6 @@ data "confluent_kafka_cluster" "cluster" {
 }
 
 locals {
-  topics = defaults(var.topics, {
-    managed = {
-      partitions_count = var.confluent_prefix != "" ? 2 : 6
-    }
-    existing = {
-      write_access = false
-      pattern_type = "LITERAL"
-    }
-  })
-
   prefix = var.confluent_prefix == "" ? "" : "${var.confluent_prefix}."
 
   service_account_name = "${local.prefix}${var.service_account_name}"
@@ -32,7 +22,7 @@ locals {
 
 resource "confluent_kafka_topic" "topics" {
   for_each = {
-    for t in local.topics.managed :
+    for t in var.topics.managed :
     t.name => t
   }
 
@@ -48,7 +38,7 @@ resource "confluent_kafka_topic" "topics" {
 
 resource "aws_ssm_parameter" "topics" {
   for_each = {
-    for t in local.topics.managed :
+    for t in var.topics.managed :
     t.name => t
   }
 
@@ -102,7 +92,7 @@ resource "confluent_kafka_acl" "app_producer_write_on_managed_topic" {
 
 resource "confluent_kafka_acl" "app_producer_write_on_existing_topic" {
   for_each = {
-    for t in local.topics.existing :
+    for t in var.topics.existing :
     t.full_name => t if t.write_access
   }
 
@@ -122,7 +112,7 @@ resource "confluent_kafka_acl" "app_producer_write_on_existing_topic" {
 
 resource "confluent_kafka_acl" "app_consumer_read_on_topic" {
   for_each = {
-    for t in local.topics.existing :
+    for t in var.topics.existing :
     t.full_name => t if !t.write_access
   }
 
@@ -141,7 +131,7 @@ resource "confluent_kafka_acl" "app_consumer_read_on_topic" {
 }
 
 resource "confluent_kafka_acl" "app_consumer_read_on_group" {
-  count = length([for t in local.topics.existing : t if !t.write_access]) == 0 ? 0 : 1
+  count = length([for t in var.topics.existing : t if !t.write_access]) == 0 ? 0 : 1
 
   resource_type = "GROUP"
   resource_name = local.consumer_group
