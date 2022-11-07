@@ -10,7 +10,7 @@ data "confluent_kafka_cluster" "cluster" {
 }
 
 locals {
-  prefix = var.confluent_prefix == "" ? "" : "${var.confluent_prefix}."
+  prefix           = var.confluent_prefix == "" ? "" : "${var.confluent_prefix}."
   partitions_count = local.prefix != "" ? 2 : 6
 
   service_account_name = "${local.prefix}${var.service_account_name}"
