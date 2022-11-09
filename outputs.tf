@@ -4,19 +4,19 @@ output "managed_topics" {
 }
 
 output "existing_topics" {
-  value       = local.topics.existing
+  value       = var.topics.existing
   description = "Existing topics output. Keyed by full_name"
 }
 
 output "write_topics" {
-  value = distinct(concat([for t in local.topics.existing : t.full_name if t.write_access],
+  value = distinct(concat([for t in var.topics.existing : t.full_name if t.write_access],
     values(confluent_kafka_topic.topics).*.topic_name
   ))
   description = "Topics with Write Access"
 }
 
 output "read_topics" {
-  value       = [for t in local.topics.existing : t.full_name if !t.write_access]
+  value       = [for t in var.topics.existing : t.full_name if !t.write_access]
   description = "Topics with Read Access"
 }
 

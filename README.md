@@ -29,7 +29,7 @@ KAFKA_REST_ENDPOINT
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.2.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.3.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0.0, < 5.0.0 |
 | <a name="requirement_confluent"></a> [confluent](#requirement\_confluent) | ~> 1.0 |
 
@@ -68,7 +68,7 @@ No modules.
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment where the cluster is located | `string` | n/a | yes |
 | <a name="input_service_account_name"></a> [service\_account\_name](#input\_service\_account\_name) | Name of the service account | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags | `map(string)` | n/a | yes |
-| <a name="input_topics"></a> [topics](#input\_topics) | List of Topics<br><br>1. For existing, full name has to be provided.<br>2. For managed, a prefix is added to non-prod environments.<br>3. To get write/produce access to existing topic, set `write_access=true` | <pre>object({<br>    managed = optional(list(object({<br>      name             = string<br>      partitions_count = optional(number)<br>      config           = optional(map(string))<br>    })))<br>    existing = optional(list(object({<br>      full_name    = string<br>      pattern_type = optional(string)<br>      write_access = optional(bool)<br>    })))<br>  })</pre> | n/a | yes |
+| <a name="input_topics"></a> [topics](#input\_topics) | List of Topics<br><br>1. For existing, full name has to be provided.<br>2. For managed, a prefix is added to non-prod environments.<br>3. To get write/produce access to existing topic, set `write_access=true` | <pre>object({<br>    managed = optional(list(object({<br>      name             = string<br>      partitions_count = optional(number)<br>      config           = optional(map(string))<br>    })))<br>    existing = optional(list(object({<br>      full_name    = string<br>      pattern_type = optional(string, "LITERAL")<br>      write_access = optional(bool, false)<br>    })))<br>  })</pre> | n/a | yes |
 
 ## Outputs
 

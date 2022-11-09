@@ -35,8 +35,8 @@ EOT
     })))
     existing = optional(list(object({
       full_name    = string
-      pattern_type = optional(string)
-      write_access = optional(bool)
+      pattern_type = optional(string, "LITERAL")
+      write_access = optional(bool, false)
     })))
   })
 }
