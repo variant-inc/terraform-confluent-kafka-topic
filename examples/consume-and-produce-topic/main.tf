@@ -20,9 +20,9 @@ module "tags" {
 module "topics" {
   source = "../../"
 
-  environment  = "enterprise"
-  topic_prefix = "dev"
-  cluster_name = "non-prod"
+  environment      = "enterprise"
+  confluent_prefix = "dev"
+  cluster_name     = "non-prod"
 
   service_account_name = "some-name"
 
