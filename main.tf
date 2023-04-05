@@ -43,7 +43,7 @@ resource "aws_ssm_parameter" "topics" {
     t.name => t
   }
 
-  name  = "topic-${each.value.name}"
+  name  = "topic-${each.value.name}-${data.confluent_kafka_cluster.cluster.id}"
   type  = "String"
   value = yamlencode(var.tags)
   tags  = var.tags
